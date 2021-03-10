@@ -25,7 +25,7 @@ Right click it to switch to targetting a specific player, then left click once t
 
 ## In the works
 
-* Button styling
+...
 
 ## Feedback
 

@@ -1,0 +1,11 @@
+.socket-settings-button {
+    flex: initial !important;
+    border-style: outset;
+    padding: 2px 10px;
+    border-radius: 20px;
+    cursor:pointer;
+}
+
+.socket-settings-button:active {
+    border-style: inset;
+}
