@@ -1,3 +1,7 @@
+# 0.0.3 - 2021/03/12
+
+* Added playlist volume sync buttons. Works with standard UI and Furnace module.
+
 # 0.0.2- 2021/03/10
 
 * Added button styling

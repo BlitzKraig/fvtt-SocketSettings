@@ -219,6 +219,8 @@ class SSSocketHelper {
                     ui.notifications.notify(`${game.i18n.localize("SOCKETSETTINGS.notif.setting-updated")}: ${data.payload.moduleKey}.${data.payload.settingKey} -> <b>${data.payload.settingVal}</b>`);
                     if (data.shouldRefresh) {
                         window.location.reload();
+                    } else if(data.render){
+                        ui[data.render]?.render();
                     }
                 }
                 break;
@@ -264,4 +266,34 @@ Hooks.once("ready", () => {
         default: false,
         type: Boolean
     });
+});
+Hooks.on("renderPlaylistDirectory", (app, html, data)=> {
+
+    if(!game.user.isGM){
+        return;
+    }
+
+    let ssSoundButton = $(`<b class="notes socket-settings-button socket-settings-playlist" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`)
+    ssSoundButton.click((el)=>{
+        // Sync this vol slider to all players
+        let settingName = $(el.currentTarget).siblings('input').attr('name');
+        let settingVal = $(el.currentTarget).siblings('input').val();
+        SocketSettings.socketHelper.sendData({
+            type: SSSocketHelper.SOCKETMESSAGETYPE.FORCE_SETTING,
+            target: '',
+            render: 'playlists',
+            payload: {
+                moduleKey: 'core',
+                settingKey: settingName,
+                settingVal: settingVal
+            }
+        });
+    });
+
+    ssSoundButton.contextmenu((el) => {
+        // TODO: Add targetting. Difficult with the minimal UI space we have
+        console.log("SocketSettings: Target players not supported on playlist levels");
+    });
+
+    html.find(".global-volume-slider").after(ssSoundButton);
 });
