@@ -4,6 +4,7 @@
     padding: 2px 10px;
     border-radius: 20px;
     cursor:pointer;
+    background-color: #d6d4c7 !important;
 }
 
 .socket-settings-button:active {
