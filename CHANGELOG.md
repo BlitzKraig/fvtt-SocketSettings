@@ -1,3 +1,9 @@
+# 0.0.4 - 2021/05/22
+
+* Updated version compat to 0.8.5
+* Fixed button title setter
+* Fixed yellow button background with df settings clarity
+
 # 0.0.3 - 2021/03/12
 
 * Added playlist volume sync buttons. Works with standard UI and Furnace module.
