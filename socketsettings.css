@@ -14,6 +14,7 @@
 .socket-settings-playlist {
     border-style: none;
     padding: 2px 0px 2px 4px;
+    background-color: unset !important;
 }
 
 .socket-settings-playlist:active {
