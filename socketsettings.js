@@ -88,11 +88,11 @@ class SocketSettings {
 
                     if (SocketSettings.activePlayersIndex >= 0) {
                         $('.socket-settings-button').text(`Sync: ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`);
-                        $('.socket-settings-button').title(`${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`)
+                        $('.socket-settings-button').prop('title', `${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`)
                         $('.socket-settings-button').data("player", SocketSettings.activePlayers[SocketSettings.activePlayersIndex]?.id);
                     } else {
                         $('.socket-settings-button').text('Sync');
-                        $('.socket-settings-button').title(`${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}`)
+                        $('.socket-settings-button').prop('title', `${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}`)
                         $('.socket-settings-button').data("player", '');
                     }
 
@@ -153,11 +153,11 @@ class SocketSettings {
 
                         if (SocketSettings.activePlayersIndex >= 0) {
                             $('.socket-settings-button').text(`Sync: ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`);
-                            $('.socket-settings-button').title(`${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`)
+                            $('.socket-settings-button').prop('title', `${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`)
                             $('.socket-settings-button').data("player", SocketSettings.activePlayers[SocketSettings.activePlayersIndex]?.id);
                         } else {
                             $('.socket-settings-button').text('Sync');
-                            $('.socket-settings-button').title(`${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}`)
+                            $('.socket-settings-button').prop('title', `${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}`)
                             $('.socket-settings-button').data("player", '');
                         }
 
