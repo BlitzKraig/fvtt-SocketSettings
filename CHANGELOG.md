@@ -1,5 +1,6 @@
 # 0.0.4 - 2021/05/22
 
+* Fix workflow action
 * Updated version compat to 0.8.5
 * Fixed button title setter
 * Fixed yellow button background with df settings clarity
