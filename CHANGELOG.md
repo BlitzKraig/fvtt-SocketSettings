@@ -1,3 +1,8 @@
+# 0.0.5 - 2021/06/04
+
+* Added support for settings using user ID as key
+    * 5e Dark Mode uses this approach
+
 # 0.0.4 - 2021/05/22
 
 * Fix workflow action

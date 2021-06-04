@@ -2,7 +2,7 @@
   "name": "SocketSettings",
   "title": "SocketSettings by Blitz",
   "description": "Instantly modify client-settings for your players",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Blitzkraig",
   "scripts": ["./socketsettings.js"],
   "styles": ["./socketsettings.css"],

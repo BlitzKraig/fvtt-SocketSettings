@@ -205,6 +205,9 @@ class SSSocketHelper {
     }
 
     async _onData(data) {
+        if(data.payload.settingKey === "SS_USERID"){
+            data.payload.settingKey = game.user.id;
+        }
         switch (data.type) {
             case SSSocketHelper.SOCKETMESSAGETYPE.FORCE_SETTING:
                 if (game.user.isGM) {
@@ -250,6 +253,11 @@ class SSSocketHelper {
     }
 
     sendData(data) {
+        // Some modules use a user ID for a setting key (5e dark mode)
+        // If the key matches the user ID, replace with a known string, which we can then replace on the client side
+        if(data.payload.settingKey === game.user.id){
+            data.payload.settingKey = "SS_USERID"
+        }
         game.socket.emit(SSSocketHelper.socketName, data);
     }
 }
