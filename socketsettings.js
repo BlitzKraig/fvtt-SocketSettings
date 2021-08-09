@@ -41,13 +41,13 @@ class SocketSettings {
                 let modSyncButtonEnabled = game.settings.get("SocketSettings", "enableFullModuleSync");
 
                 // Standard sync button
-                let ssSyncButton = $(`<b class="notes socket-settings-button" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`);
+                let ssSyncButton = $(`<b class="socket-settings-button" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`);
                 // Set blank player data, sync to all
                 ssSyncButton.data('player', '');
                 let ssModuleSyncButton
                 if (modSyncButtonEnabled) {
                     // Full module sync button
-                    ssModuleSyncButton = $(`<b class="notes socket-settings-button module-button" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`);
+                    ssModuleSyncButton = $(`<b class="socket-settings-button module-button" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`);
                     // Set blank player data, sync to all
                     ssModuleSyncButton.data('player', '');
                 }
@@ -281,7 +281,7 @@ Hooks.on("renderPlaylistDirectory", (app, html, data)=> {
         return;
     }
 
-    let ssSoundButton = $(`<b class="notes socket-settings-button socket-settings-playlist" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`)
+    let ssSoundButton = $(`<b class="socket-settings-button socket-settings-playlist" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`)
     ssSoundButton.click((el)=>{
         // Sync this vol slider to all players
         let settingName = $(el.currentTarget).siblings('input').attr('name');

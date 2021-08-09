@@ -5,6 +5,9 @@
     border-radius: 20px;
     cursor:pointer;
     background-color: #d6d4c7 !important;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 3px 0;
 }
 
 .socket-settings-button:active {
@@ -15,6 +18,7 @@
     border-style: none;
     padding: 2px 0px 2px 4px;
     background-color: unset !important;
+    color: #eeeeee;
 }
 
 .socket-settings-playlist:active {
