@@ -4,7 +4,10 @@
             "setting-updated": "The GM has updated your settings",
             "no-client-settings": "This module has no available client settings",
             "multisetting-precount": "The GM has updated",
-            "multisetting-postcount": "settings for a module"
+            "multisetting-postcount": "settings for a module",
+            "allsetting-precount": "The GM has updated",
+            "allsetting-postcount": "settings for all modules."
+
         },
         "ui":{
             "sync-button-title": "SocketSettings: Send this setting to",
@@ -14,6 +17,10 @@
             "mod-sync":{
                 "name": "Enable Full Mod Sync",
                 "hint": "Check to generate sync buttons below modules headers in settings, allowing you to sync all client-settings for a module at once."
+            },
+            "full-mod-sync":{
+                "name":"Enable All-in-one Sync",
+                "hint":"Check to generate a sync button at the top of the module settings list, allowing you to sync all client-settings for all modules at once."
             }
         }
     }

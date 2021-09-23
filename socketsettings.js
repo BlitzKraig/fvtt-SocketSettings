@@ -39,6 +39,7 @@ class SocketSettings {
                 clearInterval(settingsInterval);
 
                 let modSyncButtonEnabled = game.settings.get("SocketSettings", "enableFullModuleSync");
+                let allSyncButtonEnabled = game.settings.get("SocketSettings", "enableAllModuleSync")
 
                 // Standard sync button
                 let ssSyncButton = $(`<b class="socket-settings-button" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`);
@@ -50,6 +51,14 @@ class SocketSettings {
                     ssModuleSyncButton = $(`<b class="socket-settings-button module-button" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`);
                     // Set blank player data, sync to all
                     ssModuleSyncButton.data('player', '');
+                }
+
+                let ssAllSyncButton
+                if (allSyncButtonEnabled) {
+                    // Full module sync button
+                    ssAllSyncButton = $(`<b class="socket-settings-button all-module-button" title="${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}">Sync</b>`);
+                    // Set blank player data, sync to all
+                    ssAllSyncButton.data('player', '');
                 }
 
                 // Standard sync button
@@ -164,6 +173,65 @@ class SocketSettings {
                     });
                 }
 
+                // All-Module sync button
+                if (allSyncButtonEnabled) {
+                    
+                    // On leftclick
+                    ssAllSyncButton.click((el) => {
+                        let playerID = $(el.currentTarget).data().player;
+
+                        let clientConfigObjects = [...game.settings.settings].filter((arr) => {
+                            return arr[0].indexOf("core") !== 0 && arr[1].config && arr[1].scope == 'client'
+                        })
+
+                        let settingsScopeKeyVals = [];
+                        console.log(clientConfigObjects);
+                        for (let [settingKey, settingObj] of clientConfigObjects) {
+                            let inputEl = $(`[name=${settingKey.replace(/\./g, '\\.')}]`);
+                            let settingVal;
+                            if (inputEl.attr('type') == "checkbox") {
+                                settingVal = inputEl[0].checked;
+                            } else {
+                                settingVal = inputEl.val();
+                            }
+                            settingsScopeKeyVals.push([settingKey.split('.')[0], settingKey.split('.').slice(1).join('.'), settingVal]);
+                            console.log(settingsScopeKeyVals)
+                            console.log(`${settingKey} : ${settingVal}`);
+                        }
+
+                        if (settingsScopeKeyVals.length > 0) {
+                            SocketSettings.socketHelper.sendData({
+                                type: SSSocketHelper.SOCKETMESSAGETYPE.FORCE_FULL_SYNC,
+                                target: playerID || '',
+                                payload: {
+                                    settingsScopeKeyVals: settingsScopeKeyVals
+                                }
+                            })
+                        } else if (settingsKeyVals.length <= 0) {
+                            ui.notifications.notify(game.i18n.localize("SOCKETSETTINGS.notif.no-client-settings"));
+                        }
+                    });
+
+                    // On rightclick
+                    ssAllSyncButton.contextmenu((el) => {
+                        if (++SocketSettings.activePlayersIndex > SocketSettings.activePlayers.length - 1) {
+                            SocketSettings.activePlayersIndex = -1;
+                        }
+
+                        if (SocketSettings.activePlayersIndex >= 0) {
+                            $('.socket-settings-button').text(`Sync: ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`);
+                            $('.socket-settings-button').prop('title', `${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${SocketSettings.activePlayers[SocketSettings.activePlayersIndex].name}`)
+                            $('.socket-settings-button').data("player", SocketSettings.activePlayers[SocketSettings.activePlayersIndex]?.id);
+                        } else {
+                            $('.socket-settings-button').text('Sync');
+                            $('.socket-settings-button').prop('title', `${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-title")} ${game.i18n.localize("SOCKETSETTINGS.ui.sync-button-name-all")}`)
+                            $('.socket-settings-button').data("player", '');
+                        }
+
+                    });
+                }
+
+
                 // Add the standard buttons
                 html.find("[data-tab=modules],[data-tab=core],[data-tab=system]").find(".form-group > .form-fields > input, select").filter(function (index) {
                     // We only want to add the button to client settings
@@ -185,6 +253,13 @@ class SocketSettings {
                         html.find("[data-tab=modules]").find(".module-header").after(ssModContainer);
                     }
                 }
+                if (allSyncButtonEnabled) {
+                    // Add the full-module button
+                    let ssAllContainer = $(`<div class="form-group">
+                    <p><b>SocketSettings All-In-One Sync</b></p>`);
+                    ssAllContainer.append(ssAllSyncButton);
+                    html.find("[data-tab=modules]").find(".settings-list").prepend(ssAllContainer);
+                }
             };
         }, 100);
     }
@@ -197,7 +272,8 @@ class SSSocketHelper {
     // In case we want to add more functionality
     static SOCKETMESSAGETYPE = {
         FORCE_SETTING: 1,
-        FORCE_SETTING_ARRAY: 2
+        FORCE_SETTING_ARRAY: 2,
+        FORCE_FULL_SYNC: 3
     }
 
     constructor() {
@@ -247,6 +323,26 @@ class SSSocketHelper {
                     }
                 }
                 break;
+            case SSSocketHelper.SOCKETMESSAGETYPE.FORCE_FULL_SYNC:
+                if (game.user.isGM) {
+                    return;
+                }
+                if (data.target && data.target != game.userId) {
+                    return;
+                }
+                if (data.payload.settingsScopeKeyVals) {
+                    for (let setting of data.payload.settingsScopeKeyVals) {
+                        console.log(setting[0] + '.' + setting[1] + '/' + setting[2]);
+                        await game.settings.set(setting[0], setting[1], setting[2]);
+                    }
+
+                    ui.notifications.notify(`${game.i18n.localize("SOCKETSETTINGS.notif.allsetting-precount")} ${data.payload.settingsScopeKeyVals.length} ${game.i18n.localize("SOCKETSETTINGS.notif.allsetting-postcount")}`);
+
+                    if (data.shouldRefresh) {
+                        window.location.reload();
+                    }
+                }
+                break;
             default:
                 break;
         }
@@ -269,6 +365,14 @@ Hooks.once("ready", () => {
     game.settings.register("SocketSettings", "enableFullModuleSync", {
         name: "SOCKETSETTINGS.settings.mod-sync.name",
         hint: "SOCKETSETTINGS.settings.mod-sync.hint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+    game.settings.register("SocketSettings", "enableAllModuleSync", {
+        name: "SOCKETSETTINGS.settings.full-mod-sync.name",
+        hint: "SOCKETSETTINGS.settings.full-mod-sync.hint",
         scope: "world",
         config: true,
         default: false,
