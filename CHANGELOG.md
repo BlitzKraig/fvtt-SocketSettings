@@ -1,3 +1,8 @@
+# 0.0.7 - 2021/09/23
+
+* Added all-in-one module sync button
+* Added support for v9p2/9.224
+
 # 0.0.5 - 2021/06/04
 
 * Added support for settings using user ID as key

@@ -2,7 +2,7 @@
   "name": "SocketSettings",
   "title": "SocketSettings by Blitz",
   "description": "Instantly modify client-settings for your players",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Blitzkraig",
   "scripts": ["./socketsettings.js"],
   "styles": ["./socketsettings.css"],
@@ -15,7 +15,7 @@
     }
   ],
   "minimumCoreVersion": "0.6.0",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "9.224",
   "socket": true,
   "url": "https://github.com/BlitzKraig/fvtt-SocketSettings",
   "manifest": "https://raw.githubusercontent.com/BlitzKraig/fvtt-SocketSettings/master/module.json",

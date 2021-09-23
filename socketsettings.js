@@ -181,7 +181,7 @@ class SocketSettings {
                         let playerID = $(el.currentTarget).data().player;
 
                         let clientConfigObjects = [...game.settings.settings].filter((arr) => {
-                            return arr[0].indexOf("core") !== 0 && arr[1].config && arr[1].scope == 'client'
+                            return arr[0].indexOf('core') !== 0 && arr[1].config && arr[1].scope == 'client'
                         })
 
                         let settingsScopeKeyVals = [];
