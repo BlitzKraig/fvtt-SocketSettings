@@ -247,8 +247,15 @@ class SocketSettings {
                     <p class="notes">Sync all client settings for this module</p>`);
                     ssModContainer.append(ssModuleSyncButton);
 
+                    // Add Supprt for TidyUI
                     if (game.modules.get("tidy-ui_game-settings")?.active) {
                         html.find("[data-tab=modules]").find("article > section").prepend(ssModContainer);
+
+                    // Add Supprt for Module Management+
+                    }else if (game.modules.get("module-credits")?.active) {
+                        html.find("[data-tab=modules]").find(".module-settings").prepend(ssModContainer);
+
+                    // Default Settings
                     } else {
                         html.find("[data-tab=modules]").find(".module-header").after(ssModContainer);
                     }

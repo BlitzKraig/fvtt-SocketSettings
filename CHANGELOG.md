@@ -1,3 +1,7 @@
+# 0.0.8 - DATE
+
+* Added Supprt for Module Management+
+
 # 0.0.7 - 2021/09/23
 
 * Added all-in-one module sync button
