@@ -252,7 +252,7 @@ class SocketSettings {
                         html.find("[data-tab=modules]").find("article > section").prepend(ssModContainer);
 
                     // Add Supprt for Module Management+
-                    }else if (game.modules.get("module-credits")?.active) {
+                    } else if (game.modules.get("module-credits")?.active) {
                         html.find("[data-tab=modules]").find(".module-settings").prepend(ssModContainer);
 
                     // Default Settings

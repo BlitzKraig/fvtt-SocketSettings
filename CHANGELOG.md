@@ -1,6 +1,7 @@
-# 0.0.8 - DATE
+# 0.0.8 - 2022/02/05
 
-* Added Supprt for Module Management+
+* Added Support for Module Management+ - Thank you to mouse0270
+* Updated compatible core version to 9
 
 # 0.0.7 - 2021/09/23
 
